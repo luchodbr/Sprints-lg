@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tplglab4": {
+      "hosting": {
+        "Sprints-Luciano": [
+          "tplglab4"
+        ]
+      }
+    }
+  }
+}
