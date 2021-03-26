@@ -11,6 +11,10 @@ import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './Components/register/register.component';
+import { AuthService } from './service/auth.service';
+import { PruebaUsuario } from './service/prueba-usuario';
+import {AngularFireDatabaseModule} from '@angular/fire/database'
+import { MensajesService } from './service/mensajes.service';
 
 
 @NgModule({
@@ -26,10 +30,11 @@ import { RegisterComponent } from './Components/register/register.component';
     AppRoutingModule,
     FormsModule,
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     
   ],
-  providers: [],
+  providers: [AuthService,PruebaUsuario,MensajesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

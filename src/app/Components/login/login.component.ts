@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/Entidades/user';
-import { AuthService } from 'src/app/service/auth';
+import { AuthService } from 'src/app/service/auth.service';
+import { PruebaUsuario } from 'src/app/service/prueba-usuario';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,15 @@ export class LoginComponent implements OnInit {
   
   public  email:string;
   public  password:string;
-  constructor(private autSvc : AuthService) { }
+  public user :User=new User();
+  constructor(private autSvc : AuthService, private usrSvc : PruebaUsuario) { }
 
   ngOnInit(): void {
+    this.user.displayName="display";
+    this.user.email="emaildeprueba";
+    this.user.emailVerified=true;
+    this.user.uid="uid";
+    this.usrSvc.datosUsuario=this.user;
   }
 
   async onLogin(){

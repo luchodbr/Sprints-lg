@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth';
+import { AuthService } from 'src/app/service/auth.service';
+import { PruebaUsuario } from 'src/app/service/prueba-usuario';
 
 @Component({
   selector: 'app-register',
@@ -8,10 +9,11 @@ import { AuthService } from 'src/app/service/auth';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private authSvc : AuthService) { }
+  constructor(private authSvc : AuthService,private usrSvc : PruebaUsuario ) { }
   public  email:string;
   public  password:string;
   ngOnInit(): void {
+    console.log(this.usrSvc.datosUsuario);
   }
   async onRegister(){
     try {
