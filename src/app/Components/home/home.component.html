@@ -1,3 +1,32 @@
 <p>home works!</p>
-<input type="text" id="login" class="fadeIn second" name="login" placeholder="Hola" [(ngModel)]="this.mensaje.texto">
-<input type="submit" (click)="enviarMensaje()">
+<!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="Hola" [(ngModel)]="this.mensaje.texto">
+<input type="submit" (click)="enviarMensaje()"> -->
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="login">
+                <span data-feather="home"></span>
+                Login <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="register">
+                <span data-feather="file"></span>
+                Register
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="whoim">
+                <span data-feather="shopping-cart"></span>
+                Whoim
+              </a>
+             </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
