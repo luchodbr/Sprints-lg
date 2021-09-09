@@ -3,17 +3,24 @@ import {User} from '../Entidades/user';
 import {AngularFireAuth} from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import {AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
-import { merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+ private loggedIn= new BehaviorSubject<boolean>(false);
   public user$:Observable<User>;
+  // public logUser$:Observable<logUser>;
 
-  constructor(private afAuth: AngularFireAuth, private afs : AngularFirestore) { 
+  get isLoggedIn(){
+    return this.loggedIn.asObservable();
+  }
+
+  constructor(private afAuth: AngularFireAuth, private afs : AngularFirestore, private router :Router) { 
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user)=>{
         if(user){
@@ -66,7 +73,11 @@ export class AuthService {
   async login(email, password):Promise<User>{
     try{
       const {user} = await this.afAuth.signInWithEmailAndPassword(email,password);
-      this.UpdateUserData( user);
+      console.info(user);
+      this.UpdateUserData(user);
+      this.UpdateLogUserData(user);
+      this.loggedIn.next(true);
+      this.router.navigate(['']); 
       return user;
     }
     catch(error){
@@ -74,7 +85,10 @@ export class AuthService {
 
     }
   }
-  async logout():Promise<void>{}
+  async logout():Promise<void>{
+    this.loggedIn.next(false);
+    this.router.navigate(['/']);
+  }
   
   private UpdateUserData(user:User){
     const userRef:AngularFirestoreDocument<User>= this.afs.doc(`users/${user.uid}`);
@@ -82,10 +96,18 @@ export class AuthService {
       uid : user.uid,
       email : user.email,
       emailVerified : user.emailVerified,
-      displayName : user.displayName
+      displayName : user.displayName,
     };
     return userRef.set(data,{merge:true});
   }
+  private UpdateLogUserData(user:User){
+    return this.afs.collection('logUser').add({
+      userEmail:user.email,
+      fecha:Date.now()
+    })
+  }
+
+
   // async sendVerification():Promise<void>{
   //   try {
   //     await this.afAuth.signOut();

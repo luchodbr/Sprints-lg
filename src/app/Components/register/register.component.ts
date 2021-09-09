@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
       if(user){
         //Checkemail Verification
          console.log('User->',user);
+         
       }
     } catch (error) {
       console.log('Error',error);
